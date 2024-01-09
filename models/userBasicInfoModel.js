@@ -1,7 +1,7 @@
 const mongoose = require("mongoose")
 const validator = require("validator")
 
-const userSchema = new mongoose.Schema({
+const basicInfoSchema = new mongoose.Schema({
     fullName:{
         type:String,
         trim:true
@@ -66,6 +66,6 @@ userSchema.pre("save",function(next){
     next()
 }) 
 
-const User = mongoose.model("User",userSchema)
+const UserBasicInfo = mongoose.model("UserBasicInfo",basicInfoSchema)
 
-module.exports = User
+module.exports = UserBasicInfo

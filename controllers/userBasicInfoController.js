@@ -1,10 +1,10 @@
-const UserService = require("../services/userService")
+const BasicInfoService = require("../services/userBasicInfoService")
 
-class UserController{
+class BasicInfoController{
 
     static getUsers = async(req,res)=>{
         try{
-            const user = await UserService.getUsers()
+            const user = await BasicInfoService.getUsers()
             if(!user){
                 return res.status(404).json({success:false,message:"Unable to find users in the record"})
             }
@@ -17,7 +17,7 @@ class UserController{
     static getSpecificUser = async(req,res)=>{
         try{
             const id = req.params.id
-            const user = await UserService.getSpecificUser(id)
+            const user = await BasicInfoService.getSpecificUser(id)
             if(!user){
                 return res.status(404).json({success:false,message:"User not found"})
             }
@@ -31,7 +31,7 @@ class UserController{
         try{
             const data = req.body
             const file = req.file
-            const newUser = await UserService.addUser(data,file)
+            const newUser = await BasicInfoService.addUser(data,file)
             res.status(200).json({success:true,message:"User created successfully",data:newUser})
         }catch(err){
             console.log("Error while adding data : ",err)
@@ -50,7 +50,7 @@ class UserController{
                 const id = req.params.id 
                 const data = req.body 
                 const file = req.file
-                const updatedUser = await UserService.updateUser(id,data,file)
+                const updatedUser = await BasicInfoService.updateUser(id,data,file)
                 if(!updatedUser){
                     return res.status(404).json({success:false,message:"Cannot update user information"})
                 }
@@ -69,7 +69,7 @@ class UserController{
     static deleteUser = async(req,res)=>{
         try{
             const id = req.params.id 
-            const deletedUser = await UserService.deleteUser(id)
+            const deletedUser = await BasicInfoService.deleteUser(id)
             if(!deletedUser){
                 return res.status(404).json({success:false,message:"Cannot delete user"})
             }
@@ -81,4 +81,4 @@ class UserController{
 
 }
 
-module.exports = UserController
+module.exports = BasicInfoController

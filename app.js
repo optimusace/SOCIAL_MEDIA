@@ -2,7 +2,8 @@ require("dotenv").config()
 const express = require("express")
 const connectDB = require("./config/mongo")
 const upload = require("./config/multer")
-const UserController = require("./controllers/userController")
+const BasicInfoController = require("./controllers/userBasicInfoController")
+const PersonalInfoController = require("./controllers/userPersonalInfoController")
 
 const app = express()
 
@@ -18,11 +19,17 @@ app.get("/check",(req,res)=>{
 })
 
 // USER ROUTES 
-app.get("/api/v1/users",UserController.getUsers)
-app.get("/api/v1/users/:id",UserController.getSpecificUser)
-app.post("/api/v1/users",upload.single("photo"), UserController.addUser)
-app.put("/api/v1/users/:id",upload.single("photo"),UserController.updateUser)
-app.delete("/api/v1/users/:id",UserController.deleteUser)
+
+app.get("/api/v1/users/basic",BasicInfoController.getUsers)
+app.get("/api/v1/users/basic/:id",BasicInfoController.getSpecificUser)
+app.post("/api/v1/users/basic",upload.single("photo"), BasicInfoController.addUser)
+app.put("/api/v1/users/basic/:id",upload.single("photo"),BasicInfoController.updateUser)
+app.delete("/api/v1/users/basic/:id",BasicInfoController.deleteUser)
+
+app.get("/api/v1/users/personalinfo",PersonalInfoController.getPersonalInfo)
+app.post("/api/v1/users/personalinfo",PersonalInfoController.createPersonalInfo)
+app.put("/api/v1/users/personalinfo",PersonalInfoController.updatePersonalInfo)
+app.delete("/api/v1/users/personalinfo",PersonalInfoController.deletePersonalInfo)
 
 app.use((req,res)=>{
     res.status(404).send("Unable to find requested resource")

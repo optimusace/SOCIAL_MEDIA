@@ -1,12 +1,12 @@
-const User = require("../models/userModel")
+const UserBasicInfo = require("../models/userBasicInfoModel")
 const mongoose = require("mongoose")
 
-class UserService{
+class BasicInfoService{
 
     //GET ALL USERS INFORMATION
     static getUsers = async ()=>{
         try{
-            const users = await User.find()
+            const users = await UserBasicInfo.find()
             if(users.length > 0 ){
                 return users
             }else{
@@ -23,7 +23,7 @@ class UserService{
             if(!mongoose.Types.ObjectId.isValid(id)){
                 return null
             }
-            const user = await User.findById(id)
+            const user = await UserBasicInfo.findById(id)
             if(!user){
                 return null
             }
@@ -41,14 +41,14 @@ class UserService{
             }
             let newUser = null
             if(file){
-                newUser = await User.create({
+                newUser = await UserBasicInfo.create({
                     ...data,   
                     photo:{
                     imageName:file.filename,
                     imagePath:file.path
                 }})
             }else{
-                newUser = await User.create(data)
+                newUser = await UserBasicInfo.create(data)
             } 
             return newUser
         }catch(err){
@@ -77,7 +77,7 @@ class UserService{
             }
             let updatedUser = null
             if(file){
-                updatedUser = await User.findByIdAndUpdate(id,{
+                updatedUser = await UserBasicInfo.findByIdAndUpdate(id,{
                     ...data,
                     photo:{
                         imageName:file.filename,
@@ -85,13 +85,13 @@ class UserService{
                     }
                 })
             }else{
-                updatedUser = await User.findByIdAndUpdate(id,data)
+                updatedUser = await UserBasicInfo.findByIdAndUpdate(id,data)
             }
             
             if(!updatedUser){
                 return null
             }
-            const updatedData = await User.findById(id)
+            const updatedData = await UserBasicInfo.findById(id)
             return updatedData
         }catch(err){
             if(err && err.name === "ValidationError"){
@@ -116,7 +116,7 @@ class UserService{
             if(!mongoose.Types.ObjectId.isValid(id)){
                 return null 
             }
-            const deletedUser = await User.findByIdAndDelete(id)
+            const deletedUser = await UserBasicInfo.findByIdAndDelete(id)
             if(!deletedUser){
                 return null 
             }
@@ -128,4 +128,4 @@ class UserService{
 
 }
 
-module.exports = UserService
+module.exports = BasicInfoService
