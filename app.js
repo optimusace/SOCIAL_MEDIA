@@ -19,13 +19,12 @@ app.get("/check",(req,res)=>{
 })
 
 // USER ROUTES 
-
 app.get("/api/v1/users/basic",BasicInfoController.getUsers)
 app.get("/api/v1/users/basic/:id",BasicInfoController.getSpecificUser)
 app.post("/api/v1/users/basic",upload.single("photo"), BasicInfoController.addUser)
 app.put("/api/v1/users/basic/:id",upload.single("photo"),BasicInfoController.updateUser)
 app.delete("/api/v1/users/basic/:id",BasicInfoController.deleteUser)
-
+ 
 app.get("/api/v1/users/personalinfo",PersonalInfoController.getPersonalInfo)
 app.post("/api/v1/users/personalinfo",PersonalInfoController.createPersonalInfo)
 app.put("/api/v1/users/personalinfo",PersonalInfoController.updatePersonalInfo)
