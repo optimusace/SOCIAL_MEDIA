@@ -3,7 +3,9 @@ const express = require("express")
 const connectDB = require("./config/mongo")
 const upload = require("./config/multer")
 const BasicInfoController = require("./controllers/userBasicInfoController")
+const PostController = require("./controllers/userPostController")
 const PersonalInfoController = require("./controllers/userPersonalInfoController")
+
 
 const app = express()
 
@@ -30,6 +32,14 @@ app.post("/api/v1/users/personalinfo",PersonalInfoController.createPersonalInfo)
 app.put("/api/v1/users/personalinfo",PersonalInfoController.updatePersonalInfo)
 app.delete("/api/v1/users/personalinfo",PersonalInfoController.deletePersonalInfo)
 
+//POST ROUTES
+app.get("/api/v1/posts",PostController.getAllPosts)
+app.get("/api/v1/posts/:userId",PostController.getPostsOfUser)
+app.get("/api/v1/posts/:userId/:postId",PostController.getSpecificPost)
+app.post("/api/v1/posts/:userId",PostController.createPost)
+app.put("/api/v1/posts/:userId/:postId",PostController.updatePost)
+app.delete("/api/v1/posts/:userId/:postId",PostController.deletePost)
+
 app.use((req,res)=>{
     res.status(404).send("Unable to find requested resource")
 })
@@ -37,6 +47,7 @@ app.use((req,res)=>{
 const startServer = async () =>{
     try{
         const connectionString = process.env.MONGO_ATLAS_URL + process.env.DB_NAME
+        console.log(connectionString)
         await connectDB(connectionString)
         app.listen(process.env.PORT,()=>{
             console.log("Server started on port : ",process.env.PORT)
@@ -46,4 +57,3 @@ const startServer = async () =>{
     }
 }
 startServer()
-
