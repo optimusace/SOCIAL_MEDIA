@@ -24,7 +24,7 @@ const basicInfoSchema = new mongoose.Schema({
     },
     email:{
         type:String,
-        unique:true,
+        unique:[true,"E-mail already in use"],
         trim:true,
         validate:{
             validator:(value)=>{
@@ -46,7 +46,7 @@ const basicInfoSchema = new mongoose.Schema({
     }
 },{timestamps:true})
 
-userSchema.pre("save",function(next){
+basicInfoSchema.pre("save",function(next){
     //sanitize the input fields value if present
     if(this.fullName){
         this.fullName = validator.escape(this.fullName)

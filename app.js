@@ -36,7 +36,7 @@ app.use((req,res)=>{
 
 const startServer = async () =>{
     try{
-        const connectionString = process.env.MONGO_URL + process.env.DB_NAME
+        const connectionString = process.env.MONGO_ATLAS_URL + process.env.DB_NAME
         await connectDB(connectionString)
         app.listen(process.env.PORT,()=>{
             console.log("Server started on port : ",process.env.PORT)
