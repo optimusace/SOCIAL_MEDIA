@@ -7,7 +7,7 @@ class PersonalInfoController{
             const userId = null
             const personalInfo = await PersonalInfoService.getPersonalInfo(userId);
             if(!personalInfo){
-                return res.status(404).json({success:false,message:"Sorry!!! Unable to get personal info"})
+                return res.status(404).json({success:false,message:"Cannot find personal info"})
             }
             return res.status(200).json({success:true,message:"Personal info for user available",data:personalInfo})
         }catch(err){

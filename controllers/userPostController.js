@@ -8,7 +8,7 @@ class PostController{
         try{
             const posts = await PostService.getAllPosts()
             if(!posts){
-                res.status(404).json({success:false,message:"Sorry!! Unable to find posts"})
+                return res.status(404).json({success:false,message:"Sorry!! Unable to find posts"})
             }
             res.status(200).json({success:true,message:"Posts available",data:posts})
         }catch(err){
@@ -22,7 +22,7 @@ class PostController{
             const userId = null
             const posts = await PostService.getAllPostsOfUser(userId)
             if(!posts){
-                res.status(404).json({success:false,message:"Sorry!! Unable to find posts"})
+                return res.status(404).json({success:false,message:"Sorry!! Unable to find posts"})
             }
             res.status(200).json({success:true,message:"Posts available",data:posts})
         }catch(err){
@@ -35,8 +35,8 @@ class PostController{
         try{
             const id = req.params.id 
             const post = await PostService.getSpecificPost(id)
-            if(post){
-                res.status(404).json({success:false,message:"Unable to find post"})
+            if(!post){
+                return res.status(404).json({success:false,message:"Unable to find post"})
             }
             res.status(200).json({success:true,message:"Post available",data:post})
         }catch(err){
@@ -47,10 +47,10 @@ class PostController{
     //create new post
     static createPost = async(req,res)=>{
         try{
-            const userId = null 
+            const userId = req.params.userId 
             const data = req.body 
             const file = req.file 
-            const createdPost = await PostService.createPost(user,data,file)
+            const createdPost = await PostService.createPost(userId,data,file)
             if(!createdPost){
                 return res.status(404).json({success:false,message:"Unable to create new post"})
             }
@@ -65,7 +65,8 @@ class PostController{
         try{
             const data = req.body 
             const file = req.file 
-            const id = req.params.id 
+            const userId = req.params.userId 
+            const postId = req.params.postId
             const updatedPost = await PostService.updatePost(id,data,file)
             if(!updatedPost){
                 return res.status(404).json({success:false,message:"Sorry, cannot update post"})
@@ -79,7 +80,8 @@ class PostController{
     //delete post 
     static deletePost = async(req,res)=>{
         try{
-            const id = req.params.id 
+            const userId = req.params.userId 
+            const postId = req.params.postId 
             const deletedPost = await PostService.deletePost(id)
             if(!deletedPost){
                 return res.status(404).json({success:false,message:"Cannot delete post"})

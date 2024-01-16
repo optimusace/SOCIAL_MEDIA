@@ -1,5 +1,6 @@
 const UserPersonalInfo = require("../models/userPersonalInfoModel")
 const UserBasicInfo = require("../models/userBasicInfoModel")
+const mongoose = require("mongoose")
 
 class PersonalInfoService{
 
@@ -27,11 +28,6 @@ class PersonalInfoService{
             if(!mongoose.Types.ObjectId.isValid(userId)){
                 return null
             }
-
-            /* 
-            - check if given userId exits in the user collection
-            - only add personal info if given userid exits in the user collection
-            */
             const user = await UserBasicInfo.findById(userId)
             if(!user){
                 return null
