@@ -6,6 +6,9 @@ const personalInfoSchema = new mongoose.Schema({
         type:mongoose.Types.ObjectId,
         required:true
     },
+    gender:{
+        type:String
+    },
     personalityType:{
         type:String,
         trim:true

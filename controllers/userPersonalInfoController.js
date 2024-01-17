@@ -4,10 +4,10 @@ class PersonalInfoController{
 
     static getPersonalInfo = async (req,res)=>{
         try{
-            const userId = null
+            const userId = req.params.userId
             const personalInfo = await PersonalInfoService.getPersonalInfo(userId);
             if(!personalInfo){
-                return res.status(404).json({success:false,message:"Sorry!!! Unable to get personal info"})
+                return res.status(404).json({success:false,message:"Cannot find personal info"})
             }
             return res.status(200).json({success:true,message:"Personal info for user available",data:personalInfo})
         }catch(err){
@@ -18,7 +18,7 @@ class PersonalInfoController{
     static createPersonalInfo = async(req,res)=>{
         try{
             const data = req.body 
-            const userId = null 
+            const userId = req.params.userId
             const newPersonalInfo = await PersonalInfoService.createPersonalInfo(userId,data)
             if(!newPersonalInfo){
                 return res.status(404).json({success:false,message:"Cannot create personal info for the user"})
@@ -32,7 +32,7 @@ class PersonalInfoController{
     static updatePersonalInfo = async(req,res)=>{
         try{
             const data = req.body 
-            const userId = null
+            const userId = req.params.userId
             const updatedInfo = await PersonalInfoService.updatePersonalInfo(userId,data)
             if(!updatedInfo){
                 return res.status(404).json({success:false,message:"Cannot update personal info for the user"})
@@ -45,10 +45,10 @@ class PersonalInfoController{
 
     static deletePersonalInfo = async(req,res)=>{
         try{
-            const userId = null 
+            const userId = req.params.userId
             const deletedInfo = await PersonalInfoService.deletePersonalInfo(userId)
             if(!deletedInfo){
-                return res.status(404).json({success:false,message:"Cannot delete personal info"})
+                return res.status(404).json({success:false,message:"Cannot delete personal info for the user"})
             }
             res.status(200).json({success:true,message:"Successfully deleted personal info",data:deletedInfo})
         }catch(err){

@@ -25,7 +25,7 @@ const basicInfoSchema = new mongoose.Schema(
     },
     email: {
       type: String,
-      unique: true,
+      unique: [true, 'E-mail already in use'],
       trim: true,
       validate: {
         validator: (value) => {
