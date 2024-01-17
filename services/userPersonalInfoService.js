@@ -28,6 +28,7 @@ class PersonalInfoService{
             if(!mongoose.Types.ObjectId.isValid(userId)){
                 return null
             }
+            //check if user with given userid exists in the database
             const user = await UserBasicInfo.findById(userId)
             if(!user){
                 return null
@@ -49,7 +50,7 @@ class PersonalInfoService{
                 return null
             }
             const update = await UserPersonalInfo.findOneAndUpdate({userId:userId},data)
-            if(!updatedInfo){
+            if(!update){
                 return null
             }
             const updatedInfo = await UserPersonalInfo.findOne({userId:userId})

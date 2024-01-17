@@ -25,10 +25,10 @@ app.put("/api/v1/users/basic/:id",upload.single("photo"),BasicInfoController.upd
 app.delete("/api/v1/users/basic/:id",BasicInfoController.deleteUser)
  
 //USERS PERSONAL INFO ROUTES
-app.get("/api/v1/users/personalinfo",PersonalInfoController.getPersonalInfo)
-app.post("/api/v1/users/personalinfo",upload.none(),PersonalInfoController.createPersonalInfo)
-app.put("/api/v1/users/personalinfo",upload.none(),PersonalInfoController.updatePersonalInfo)
-app.delete("/api/v1/users/personalinfo",PersonalInfoController.deletePersonalInfo)
+app.get("/api/v1/users/personalinfo/:userId",PersonalInfoController.getPersonalInfo)
+app.post("/api/v1/users/personalinfo/:userId",upload.none(),PersonalInfoController.createPersonalInfo)
+app.put("/api/v1/users/personalinfo/:userId",upload.none(),PersonalInfoController.updatePersonalInfo)
+app.delete("/api/v1/users/personalinfo/:userId",PersonalInfoController.deletePersonalInfo)
 
 //POST ROUTES
 app.get("/api/v1/posts",PostController.getAllPosts)
