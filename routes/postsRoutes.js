@@ -6,9 +6,9 @@ const router = express.Router()
 
 router.get("/",PostController.getAllPosts)
 router.get("/:userId",PostController.getPostsOfUser)
-router.get("/:userId/:postId",PostController.getSpecificPost)
+router.get("/post/:postId",PostController.getSpecificPost)
 router.post("/:userId",upload.single("media"),PostController.createPost)
-router.put("/:userId/:postId",upload.single("media"),PostController.updatePost)
-router.delete("/:userId/:postId",PostController.deletePost)
+router.put("/post/:postId",upload.single("media"),PostController.updatePost)
+router.delete("/post/:postId",PostController.deletePost)
 
 module.exports = router

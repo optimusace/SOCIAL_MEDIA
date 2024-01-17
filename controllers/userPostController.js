@@ -10,7 +10,7 @@ class PostController{
             if(!posts){
                 return res.status(404).json({success:false,message:"Sorry!! Unable to find posts"})
             }
-            res.status(200).json({success:true,message:"Posts available",data:posts})
+            res.status(200).json({success:true,message:"All Posts - available",data:posts})
         }catch(err){
             res.status(500).json({success:false,message:"Internal Server Error",error:err.message})
         }
@@ -19,12 +19,12 @@ class PostController{
     //get all posts of a specific user using user id 
     static getPostsOfUser = async(req,res)=>{
         try{
-            const userId = null
+            const userId = req.params.userId
             const posts = await PostService.getAllPostsOfUser(userId)
             if(!posts){
                 return res.status(404).json({success:false,message:"Sorry!! Unable to find posts"})
             }
-            res.status(200).json({success:true,message:"Posts available",data:posts})
+            res.status(200).json({success:true,message:"Posts of specific user - available",data:posts})
         }catch(err){
             res.status(500).json({success:false,message:"Internal Server Error",error:err.message})
         }
@@ -33,8 +33,8 @@ class PostController{
     //get details about the specific post
     static getSpecificPost = async(req,res)=>{
         try{
-            const id = req.params.id 
-            const post = await PostService.getSpecificPost(id)
+            const postId = req.params.postId
+            const post = await PostService.getSpecificPost(postId)
             if(!post){
                 return res.status(404).json({success:false,message:"Unable to find post"})
             }
@@ -63,11 +63,10 @@ class PostController{
     //update post 
     static updatePost = async(req,res)=>{
         try{
+            const postId = req.params.postId 
             const data = req.body 
             const file = req.file 
-            const userId = req.params.userId 
-            const postId = req.params.postId
-            const updatedPost = await PostService.updatePost(id,data,file)
+            const updatedPost = await PostService.updatePost(postId,data,file)
             if(!updatedPost){
                 return res.status(404).json({success:false,message:"Sorry, cannot update post"})
             }
@@ -80,9 +79,8 @@ class PostController{
     //delete post 
     static deletePost = async(req,res)=>{
         try{
-            const userId = req.params.userId 
-            const postId = req.params.postId 
-            const deletedPost = await PostService.deletePost(id)
+            const postId = req.params.postId
+            const deletedPost = await PostService.deletePost(postId)
             if(!deletedPost){
                 return res.status(404).json({success:false,message:"Cannot delete post"})
             }

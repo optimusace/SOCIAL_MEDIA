@@ -36,12 +36,12 @@ class PostService{
     }
 
     //get specific post using post id
-    static getSpecificPost = async (id)=>{
+    static getSpecificPost = async (postId)=>{
         try{
-            if(!mongoose.Types.ObjectId.isValid(id)){
+            if(!mongoose.Types.ObjectId.isValid(postId)){
                 return null
             }
-            const post = await UserPost.findById(id)
+            const post = await UserPost.findById(postId)
             if(!post){
                 return null 
             }
@@ -66,13 +66,22 @@ class PostService{
             if(!user){
                 return null
             }
-            const createdUser = await UserPost.create({
-                ...data,
-                media:{
-                    mediaName : file.originalname,
-                    mediaPath : file.path
-                }
-            })
+            let createdUser = null
+            if(!file){
+                createdUser = await UserPost.create({
+                    userId,
+                    ...data
+                })
+            }else{
+                createdUser = await UserPost.create({
+                    userId,
+                    ...data,
+                    media:{
+                        mediaName : file.filename,
+                        mediaPath : file.path
+                    }
+                })   
+            }
             return createdUser
         }catch(err){
             throw err
@@ -80,36 +89,42 @@ class PostService{
     }
 
     //update post details
-    static updatePost = async (id,data,file)=>{
+    static updatePost = async (postId,data,file)=>{
         try{
-            if(!mongoose.Types.ObjectId.isValid(id)){
+            if(!mongoose.Types.ObjectId.isValid(postId)){
                 return null
             }
-            const update = await UserPost.findByIdAndUpdate(id,{
-                ...data,
-                media:{
-                    mediaName:file.originalname,
-                    mediaPath:file.path
-                }
-            })
+            let update = null 
+            if(!file){
+                update = await UserPost.findByIdAndUpdate(postId,{
+                    ...data
+                })
+            }else{
+                update = await UserPost.findByIdAndUpdate(postId,{
+                    ...data,
+                    media:{
+                        mediaName:file.filename,
+                        mediaPath:file.path 
+                    }
+                })
+            }
             if(!update){
                 return null 
             }
-            const updatedData = await UserPost.findById(id)
+            const updatedData = await UserPost.findById(postId)
             return updatedData
-
         }catch(err){
             throw err
         }
     }
     
     //delete post
-    static deletePost = async (id)=>{
+    static deletePost = async (postId)=>{
         try{
-            if(!mongoose.Types.ObjectId.isValid(id)){
+            if(!mongoose.Types.ObjectId.isValid(postId)){
                 return null
             }
-            const deletedData = await UserPost.findByIdAndDelete(id)
+            const deletedData = await UserPost.findByIdAndDelete(postId)
             if(!deletedData){
                 return null
             }
