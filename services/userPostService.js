@@ -1,39 +1,38 @@
-const UserBasicInfo = require("../models/userBasicInfoModel")
-const UserPost = require("../models/userPostModel")
-const mongoose = require("mongoose")
+const UserBasicInfo = require('../models/userBasicInfoModel');
+const UserPost = require('../models/userPostModel');
+const mongoose = require('mongoose');
 
-class PostService{
-
-    //get posts of all users
-    static getAllPosts = async ()=>{
-        try{
-            const posts = await UserPost.find()
-            if(posts.length > 0){
-                return posts
-            }else{
-                return null
-            }
-        }catch(err){
-            throw err
-        }
+class PostService {
+  //get posts of all users
+  static getAllPosts = async () => {
+    try {
+      const posts = await UserPost.find();
+      if (posts.length > 0) {
+        return posts;
+      } else {
+        return null;
+      }
+    } catch (err) {
+      throw err;
     }
+  };
 
-    //get all posts of a specific user using user id 
-    static getAllPostsOfUser = async (userId)=>{
-        try{
-            if(!mongoose.Types.ObjectId.isValid(userId)){
-                return null
-            }
-            const userPosts = await UserPost.find({userId:userId})
-            if(userPosts.length > 0){
-                return userPosts
-            }else{
-                return null
-            }
-        }catch(err){
-            throw err 
-        }
+  //get all posts of a specific user using user id
+  static getAllPostsOfUser = async (userId) => {
+    try {
+      if (!mongoose.Types.ObjectId.isValid(userId)) {
+        return null;
+      }
+      const userPosts = await UserPost.find({ userId: userId });
+      if (userPosts.length > 0) {
+        return userPosts;
+      } else {
+        return null;
+      }
+    } catch (err) {
+      throw err;
     }
+  };
 
     //get specific post using post id
     static getSpecificPost = async (postId)=>{
@@ -51,10 +50,10 @@ class PostService{
         }
     }
 
-    //create new post
-    static createPost = async (userId,data,file)=>{
-        try{
-            /* 
+  //create new post
+  static createPost = async (userId, data, file) => {
+    try {
+      /* 
              - check if user id is valid 
              - check if user with given id exists in the database
              - if user exists then he can create post
@@ -87,6 +86,7 @@ class PostService{
             throw err
         }
     }
+  };
 
     //update post details
     static updatePost = async (postId,data,file)=>{
@@ -136,4 +136,4 @@ class PostService{
 
 }
 
-module.exports = PostService
+module.exports = PostService;
