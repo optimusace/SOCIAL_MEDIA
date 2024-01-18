@@ -82,12 +82,12 @@ class CommentController {
   //Update the comment
   static updateComment = async (req, res) => {
     try {
-      const id = req.params.id;
+      const commentId = req.params.commentId;
       const userId = req.params.userId;
       const data = req.body;
 
       const updatedComment = await CommentService.updateComment(
-        id,
+        commentId,
         userId,
         data
       );
@@ -115,7 +115,7 @@ class CommentController {
   //Delete the comment
   static deleteComment = async (req, res) => {
     try {
-      const id = req.params.id;
+      const id = req.params.commentId;
       const userId = req.params.userId;
 
       const deletedComment = await CommentService.deleteComment(id, userId);

@@ -74,24 +74,24 @@ class CommentService {
   };
 
   //Update the comment
-  static updateComment = async (id, userId, data) => {
+  static updateComment = async (commentId, userId, data) => {
     try {
-      if (!mongoose.Types.ObjectId.isValid(id)) return null;
+      if (!mongoose.Types.ObjectId.isValid(commentId)) return null;
 
       if (!mongoose.Types.ObjectId.isValid(userId)) return null;
 
       const user = await UserBasicInfo.findById(userId);
-
+      const comment = await UserComment.findById(commentId)
       if (!user) return null;
 
       if (userId === comment.userId.toString()) {
-        const updateComment = await UserComment.findByIdAndUpdate(id, {
+        const updateComment = await UserComment.findByIdAndUpdate(commentId, {
           comment: data,
         });
 
         if (!updateComment) return null;
 
-        const updatedData = await UserComment.findById(id);
+        const updatedData = await UserComment.findById(commentId);
         return updatedData;
       } else {
         return null;
@@ -102,18 +102,19 @@ class CommentService {
   };
 
   //Delete the comment
-  static deleteComment = async (id, userId) => {
+  static deleteComment = async (commentId, userId) => {
     try {
-      if (!mongoose.Types.ObjectId.isValid(id)) return null;
+      if (!mongoose.Types.ObjectId.isValid(commentId)) return null;
 
       if (!mongoose.Types.ObjectId.isValid(userId)) return null;
 
       const user = await UserBasicInfo.findById(userId);
 
       if (!user) return null;
-
+      
+      const comment = await UserComment.findById(commentId)
       if (userId === comment.userId.toString()) {
-        const deletedComment = await UserComment.findByIdAndDelete(id);
+        const deletedComment = await UserComment.findByIdAndDelete(commentId);
 
         if (!deletedComment) return null;
 

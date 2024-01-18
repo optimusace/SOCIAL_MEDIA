@@ -6,6 +6,7 @@ const basicInfoRoutes = require('./routes/basicInfoRoutes');
 const personalInfoRoutes = require('./routes/personalInfoRoutes');
 const postsRoutes = require('./routes/postsRoutes');
 const likeRoutes = require('./routes/likeRoutes');
+const commentRoutes = require("./routes/commentRoutes")
 
 const app = express();
 
@@ -23,6 +24,7 @@ app.use('/api/v1/users/basic', basicInfoRoutes);
 app.use('/api/v1/users/personalinfo', personalInfoRoutes);
 app.use('/api/v1/posts', postsRoutes);
 app.use('/api/v1/likes', likeRoutes);
+app.use("/api/v1/comments",commentRoutes)
 
 app.use((req, res) => {
   res.status(404).send('Unable to find requested resource');
