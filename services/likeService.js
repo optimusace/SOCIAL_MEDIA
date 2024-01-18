@@ -1,4 +1,6 @@
 const Like = require("../models/likeModel")
+const UserPost = require("../models/userPostModel")
+const UserBasicInfo = require("../models/userBasicInfoModel")
 const mongoose = require("mongoose")
 
 class LikeService{
@@ -18,6 +20,16 @@ class LikeService{
     static createLike = async(postId,userId)=>{
         try{
             if(!mongoose.Types.ObjectId.isValid(userId) || !mongoose.Types.ObjectId.isValid(postId)){
+                return null
+            }
+            //check if post exists 
+            const postAvailable = await UserPost.findById(postId)
+            if(!postAvailable){
+                return null
+            }
+            //check if user exits 
+            const userAvailable = await UserBasicInfo.findById(userId)
+            if(!userAvailable){
                 return null
             }
             const newLike = await Like.create({

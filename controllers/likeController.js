@@ -4,7 +4,7 @@ class LikeController{
 
     static getLikes = async (req,res)=>{
         try{
-            const postId = req.params.userId
+            const postId = req.params.postId
             const likes = await LikeService.getLikes(postId)
             if(!likes){
                 return res.status(404).json({success:false,message:"Cannot get likes for the post"})
