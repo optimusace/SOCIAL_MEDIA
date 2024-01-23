@@ -86,7 +86,6 @@ class PostService {
             throw err
         }
     }
-  };
 
     //update post details
     static updatePost = async (postId,data,file)=>{
@@ -136,4 +135,6 @@ class PostService {
 
 }
 
+
+    
 module.exports = PostService;
